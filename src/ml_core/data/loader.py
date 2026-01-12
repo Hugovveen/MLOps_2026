@@ -27,24 +27,21 @@ def get_dataloaders(config):
         filter_data=False,
     )
 
-    labels = [train_ds[i][1].item() for i in range(len(train_ds))]
+    labels = [train_dataset[i][1].item() for i in range(len(train_dataset))]
     class_counts = np.bincount(labels)
-    weights = 1.0 / class_counts
-    sample_weights = [weights[l] for l in labels]
+    class_weights = 1.0 / class_counts
+    sample_weights = [class_weights[l] for l in labels]
 
-    sampler = WeightedRandomSampler(sample_weights, len(sample_weights))
-
-    train_loader = DataLoader(
-        train_ds,
-        batch_size=data_cfg["batch_size"],
-        sampler=sampler,
-        num_workers=data_cfg.get("num_workers", 0),
+    sampler = WeightedRandomSampler(
+        weights=sample_weights,
+        num_samples=len(sample_weights),
+        replacement=True,
     )
 
-    val_loader = DataLoader(
-        val_ds,
+    train_loader = DataLoader(
+        train_dataset,
         batch_size=data_cfg["batch_size"],
-        shuffle=False,
+        sampler=sampler,
         num_workers=data_cfg.get("num_workers", 0),
     )
 
