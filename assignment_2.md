@@ -3,7 +3,7 @@
 
 ## Group Information
 * **Group Number:** [Group 2]
-* **Team Members:** [Eva van Wiggen/15246280, Member 2 Name/ID, Member 3 Name/ID, Member 4 Name/ID, Member 5 Name/ID]
+* **Team Members:** [Eva van Wiggen/15246280, Hugo van Veen/15759261, Arjan van Staveren/13607812, David van Goethem/15628124, Joshua Appiah/13606069]
 * **GitHub Repository:** [[Link to your Group Repository](https://github.com/Hugovveen/MLOps_2026)]
 * **Base Setup Chosen from Assignment 1:** [Hugo van Veen]
 
