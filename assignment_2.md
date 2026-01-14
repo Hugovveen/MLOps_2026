@@ -12,7 +12,31 @@
 ## Question 1: Reproducibility Audit
 1. **Sources of Non-Determinism:**
 
+
+#### TRAIN/VAL Set
+- Training and Validation shuffling causes the distribution of data points to be random, reducing the reproducibility of the run. (This happens in loader.py)
+
+
+#### Dataloader config
+- The configuration DataLoader(shuffle=True), creates a random permutation of indices for every epoch (iteration), this changes the sequence of gradients the model gets every run, breaking determinism and reproducibility. 
+
+#### Hardware FPO's
+- different sets of hardware could have different kind of rounding errors due to finite preciscion that floating point operations have (FPO's)
+
+#### Libraries
+- Different versions of libraries could possibly influence the behavior of certain operations, PyTorch, CUDA, Mod-stacks methods chang from version to version. This once again break determinism.
+
+
+
 2. **Control Measures:**
+- Use a random seed for the train/val set
+
+- It is possible Turn shuffle off in the data loader, but this can hurt performance, you can also keep shuffling but via random seeds and deterministic settings.
+
+- This is hard to fix but you can mitigate this issue by using deterministic settings in pytorch and CUDA.  
+
+- Make sure the required libraries with versions are documented in a file for the exact run. like a requirements.txt file, also using commit messages in git helps!
+
 
 3. **Code Snippets for Reproducibility:**
    ```python
