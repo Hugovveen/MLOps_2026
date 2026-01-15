@@ -31,11 +31,25 @@
 2. **Control Measures:**
 - Use a random seed for the train/val set
 
+- (this will be implemented)
+
+
+
 - It is possible Turn shuffle off in the data loader, but this can hurt performance, you can also keep shuffling but via random seeds and deterministic settings.
+
+- This currently not in our code
+
+
 
 - This is hard to fix but you can mitigate this issue by using deterministic settings in pytorch and CUDA.  
 
+-  (This will be implemented)
+
+
+
 - Make sure the required libraries with versions are documented in a file for the exact run. like a requirements.txt file, also using commit messages in git helps!
+
+- This is controlled, we have a requirements.txt
 
 
 3. **Code Snippets for Reproducibility:**
