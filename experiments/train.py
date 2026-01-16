@@ -1,3 +1,4 @@
+from ml_core.utils import load_yaml_config
 import argparse
 import torch
 import torch.optim as optim
@@ -10,7 +11,13 @@ import torch.optim as optim
 
 def main(args):
     # 1. Load Config & Set Seed
-    # config = load_config(args.config)
+    config = load_yaml_config(args.config)
+
+    print("Loaded config:", args.config)
+    print("seed:", config.get("seed"))
+    print("data.batch_size:", config["data"]["batch_size"])
+    print("training.epochs:", config["training"]["epochs"])
+    print("training.learning_rate:", config["training"]["learning_rate"])
     
     # 2. Setup Device
     
@@ -26,7 +33,6 @@ def main(args):
     # 6. Trainer & Fit
     # trainer = Trainer(...)
     # trainer.fit(...)
-    pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
@@ -34,4 +40,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
-    print("Skeleton: Implement main logic first.")
