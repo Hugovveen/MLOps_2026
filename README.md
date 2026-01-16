@@ -40,10 +40,23 @@ pytest tests/
 ```bash
 python experiments/train.py --config experiments/configs/train_config.yaml
 ```
-
 ---
 
+### 2. Data Setup
+# TODO uitleg PCAM H5 files en pad
+
+### 3. Training
+# TODO exact command
+# TODO expected val/test performance
+# TODO config file
+
+### 4. Inference
+# TODO inference script
+# TODO checkpoint path
+# TODO example command
+
 ## 📂 Project Structure
+---
 
 ```text
 .
