@@ -14,9 +14,7 @@ Don't forget to setup CI and linting!
 
 ---
 
-## 🚀 Quick Start
-
-### 1. Installation
+## 1. Installation
 Clone the repository and set up your isolated environment.
 
 ```bash
@@ -43,17 +41,23 @@ python experiments/train.py --config experiments/configs/train_config.yaml
 ---
 
 ### 2. Data Setup
+```bash
 # TODO uitleg PCAM H5 files en pad
+```
 
 ### 3. Training
+```bash
 # TODO exact command
 # TODO expected val/test performance
 # TODO config file
+```
 
 ### 4. Inference
+```bash
 # TODO inference script
 # TODO checkpoint path
 # TODO example command
+```
 
 ## 📂 Project Structure
 ---
