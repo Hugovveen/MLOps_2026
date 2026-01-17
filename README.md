@@ -40,24 +40,82 @@ python experiments/train.py --config experiments/configs/train_config.yaml
 ```
 ---
 
-### 2. Data Setup
-```bash
-# TODO uitleg PCAM H5 files en pad
+## 2. Data Setup
 ```
+This project uses the PCAM dataset provided as HDF5 files.
 
-### 3. Training
+The dataset is not included in this repository.
+
+The data directory is defined via the configuration file under the key:
+bash ```data.data_path``` 
+
+All PCAM H5 files must be placed inside this directory.
+
+The following files are required:
+
+```bash
+camelyonpatch_level_2_split_train_x.h5
+camelyonpatch_level_2_split_train_y.h5
+camelyonpatch_level_2_split_val_x.h5
+camelyonpatch_level_2_split_val_y.h5
+``` 
+
+All PCAM H5 files must be placed inside this directory.
+
+Required files for training:
+
+```bash
+camelyonpatch_level_2_split_train_x.h5
+
+camelyonpatch_level_2_split_train_y.h5
+``` 
+
+Optional validation files:
+
+```bash
+camelyonpatch_level_2_split_val_x.h5
+
+camelyonpatch_level_2_split_val_y.h5
+``` 
+
+Validation is optional. If the validation files are not present, the training pipeline will run without a validation DataLoader.
+
+Example directory layout:
+
+```bash
+<DATA_PATH>/
+camelyonpatch_level_2_split_train_x.h5
+camelyonpatch_level_2_split_train_y.h5
+camelyonpatch_level_2_split_val_x.h5
+camelyonpatch_level_2_split_val_y.h5
+``` 
+
+Ensure that the directory structure matches exactly, as the dataset loader expects this layout
+
+TODO:
+
+Add test H5 files to this section if test evaluation is implemented later.
+
+Update this section if the data_path configuration key or default value changes.
+
+Verify and document the exact dataset location used for the final training run.
+---
+
+## 3. Training
 ```bash
 # TODO exact command
 # TODO expected val/test performance
 # TODO config file
 ```
+---
 
-### 4. Inference
+## 4. Inference
 ```bash
 # TODO inference script
 # TODO checkpoint path
 # TODO example command
 ```
+---
 
 ## 📂 Project Structure
 ---
