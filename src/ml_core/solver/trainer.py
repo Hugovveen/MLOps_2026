@@ -1,12 +1,9 @@
-import time
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Optional, Tuple, List
 
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-
-from ..utils import ExperimentTracker, setup_logger
 
 
 class Trainer:
@@ -16,53 +13,122 @@ class Trainer:
         optimizer: torch.optim.Optimizer,
         config: Dict[str, Any],
         device: str,
+        scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
     ):
         self.model = model.to(device)
         self.optimizer = optimizer
         self.config = config
         self.device = device
-        
-        # TODO: Define Loss Function (Criterion)
-        self.criterion = None
+        self.scheduler = scheduler
 
-        # TODO: Initialize ExperimentTracker
-        self.tracker = None
-        
-        # TODO: Initialize metric calculation (like accuracy/f1-score) if needed
+        # Loss function for classification with logits (MLP outputs 2 logits)
+        self.criterion = nn.CrossEntropyLoss()
+
+        # Storage for Q4
+        self.grad_norm_history: List[float] = []   # per step global grad norm
+        self.lr_history: List[float] = []          # per epoch LR
+
+    def _current_lr(self) -> float:
+        # Most optimizers have one param_group; if multiple, take the first.
+        return float(self.optimizer.param_groups[0]["lr"])
 
     def train_epoch(self, dataloader: DataLoader, epoch_idx: int) -> Tuple[float, float, float]:
         self.model.train()
-        
-        # TODO: Implement Training Loop
-        # 1. Iterate over dataloader
-        # 2. Move data to device
-        # 3. Forward pass, Calculate Loss
-        # 4. Backward pass, Optimizer step
-        # 5. Track metrics (Loss, Accuracy, F1)
-        
-        raise NotImplementedError("Implement train_epoch")
+
+        running_loss = 0.0
+        correct = 0
+        total = 0
+
+        log_every = int(self.config["training"].get("log_every_steps", 100))
+
+        for step_idx, (images, labels) in enumerate(tqdm(dataloader, desc=f"Train epoch {epoch_idx+1}")):
+            images = images.to(self.device)
+            labels = labels.to(self.device)
+
+            self.optimizer.zero_grad()
+
+            outputs = self.model(images)
+            loss = self.criterion(outputs, labels)
+
+            loss.backward()
+
+            # Compute L2 norm over all parameter gradients that exist.
+            total_norm_sq = 0.0
+            for p in self.model.parameters():
+                if p.grad is None:
+                    continue
+                param_norm = p.grad.data.norm(2)
+                total_norm_sq += float(param_norm) ** 2
+            grad_norm = total_norm_sq ** 0.5
+            self.grad_norm_history.append(grad_norm)
+
+            self.optimizer.step()
+
+            running_loss += float(loss.item())
+
+            preds = outputs.argmax(dim=1)
+            correct += int((preds == labels).sum().item())
+            total += int(labels.numel())
+
+            if log_every > 0 and step_idx % log_every == 0:
+                acc = correct / max(total, 1)
+                print(f"[Train] epoch={epoch_idx+1} step={step_idx} loss={loss.item():.4f} acc={acc:.4f} grad_norm={grad_norm:.4f}")
+
+        avg_loss = running_loss / max(len(dataloader), 1)
+        acc = correct / max(total, 1)
+
+        f1_placeholder = 0.0
+        return avg_loss, acc, f1_placeholder
 
     def validate(self, dataloader: DataLoader, epoch_idx: int) -> Tuple[float, float, float]:
         self.model.eval()
-        
-        # TODO: Implement Validation Loop
-        # Remember: No gradients needed here
-        
-        raise NotImplementedError("Implement validate")
 
-    def save_checkpoint(self, epoch: int, val_loss: float) -> None:
-        # TODO: Save model state, optimizer state, and config
-        pass
+        running_loss = 0.0
+        correct = 0
+        total = 0
 
-    def fit(self, train_loader: DataLoader, val_loader: DataLoader) -> None:
-        epochs = self.config["training"]["epochs"]
-        
+        if dataloader is None:
+            # No validation available
+            return 0.0, 0.0, 0.0
+
+        with torch.no_grad():
+            for images, labels in tqdm(dataloader, desc=f"Val epoch {epoch_idx+1}"):
+                images = images.to(self.device)
+                labels = labels.to(self.device)
+
+                outputs = self.model(images)
+                loss = self.criterion(outputs, labels)
+
+                running_loss += float(loss.item())
+
+                preds = outputs.argmax(dim=1)
+                correct += int((preds == labels).sum().item())
+                total += int(labels.numel())
+
+        avg_loss = running_loss / max(len(dataloader), 1)
+        acc = correct / max(total, 1)
+        f1_placeholder = 0.0
+        return avg_loss, acc, f1_placeholder
+
+    def fit(self, train_loader: DataLoader, val_loader: Optional[DataLoader]) -> None:
+        epochs = int(self.config["training"]["epochs"])
         print(f"Starting training for {epochs} epochs...")
-        
+
         for epoch in range(epochs):
-            # TODO: Call train_epoch and validate
-            # TODO: Log metrics to tracker
-            # TODO: Save checkpoints
-            pass
-            
-	# Remember to handle the trackers properly
+            # log LR once per epoch (Q4b requirement)
+            current_lr = self._current_lr()
+            self.lr_history.append(current_lr)
+            print(f"[LR] epoch={epoch+1} lr={current_lr}")
+
+            train_loss, train_acc, _ = self.train_epoch(train_loader, epoch)
+            val_loss, val_acc, _ = self.validate(val_loader, epoch) if val_loader is not None else (0.0, 0.0, 0.0)
+
+            print(
+                f"--- Epoch {epoch+1} Summary: "
+                f"Train Loss {train_loss:.4f}, Train Acc {train_acc:.4f} | "
+                f"Val Loss {val_loss:.4f}, Val Acc {val_acc:.4f} ---"
+            )
+
+            # Scheduler stepping: default to per epoch schedulers
+            if self.scheduler is not None:
+                self.scheduler.step()
