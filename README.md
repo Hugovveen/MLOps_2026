@@ -15,50 +15,28 @@ Don't forget to setup CI and linting!
 ---
 
 ## 1. Installation
-Clone the repository and set up your isolated environment.
+This project requires Python 3.10 or higher.
 
 ```bash
-# 1. Create a virtual environment
+# 1. Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# 2. Install the package in "Editable" mode
+# 2. Upgrade pip
+pip install --upgrade pip
+
+# 3. Install the project and dependencies
 pip install -e .
-
-# 3. Install pre-commit hooks
-pre-commit install
-```
-
-### 2. Verify Setup
-```bash
-pytest tests/
-```
-
-### 3. Run an Experiment
-```bash
-python experiments/train.py --config experiments/configs/train_config.yaml
-```
+``` 
 ---
 
 ## 2. Data Setup
-```
+
 This project uses the PCAM dataset provided as HDF5 files.
 
 The dataset is not included in this repository.
 
-The data directory is defined via the configuration file under the key:
-bash ```data.data_path``` 
-
-All PCAM H5 files must be placed inside this directory.
-
-The following files are required:
-
-```bash
-camelyonpatch_level_2_split_train_x.h5
-camelyonpatch_level_2_split_train_y.h5
-camelyonpatch_level_2_split_val_x.h5
-camelyonpatch_level_2_split_val_y.h5
-``` 
+The data directory is defined via the configuration file under the key: data.data_path 
 
 All PCAM H5 files must be placed inside this directory.
 
@@ -99,22 +77,58 @@ Add test H5 files to this section if test evaluation is implemented later.
 Update this section if the data_path configuration key or default value changes.
 
 Verify and document the exact dataset location used for the final training run.
+
 ---
 
 ## 3. Training
+
+Training is performed using the script:
+
 ```bash
-# TODO exact command
-# TODO expected val/test performance
-# TODO config file
-```
+experiments/train.py
+``` 
+
+The training pipeline is configured via a YAML configuration file.
+
+Configuration template:
+
+```bash
+experiments/configs/train_config.yaml
+``` 
+
+Training command (to be finalized)
+```bash
+TODO exact command used to run experiments/train.py for the best model
+TODO exact configuration file path
+TODO random seed used
+``` 
+
+Expected performance (to be finalized)
+```bash
+TODO validation metric and value
+TODO test metric and value
+``` 
+
+Artifacts (to be finalized)
+```bash
+TODO path to saved model checkpoint (.pt or .pth)
+TODO path to logs and experiment outputs
+``` 
 ---
 
 ## 4. Inference
-```bash
-# TODO inference script
-# TODO checkpoint path
-# TODO example command
-```
+This section describes how to run a single prediction using a trained model checkpoint.
+
+Inference entrypoint (to be finalized)
+TODO add a dedicated inference.py or a notebook that loads the selected best checkpoint and runs a prediction on a single sample image.
+
+Model checkpoint (to be finalized)
+TODO add the selected best model checkpoint file (.pt or .pth) to the repository.
+TODO document the final checkpoint path used for inference.
+
+Example usage (to be finalized)
+TODO provide the exact command to run inference once inference.py or the notebook is available.
+TODO include the path to a sample image used for the example.
 ---
 
 ## 📂 Project Structure
