@@ -3,6 +3,8 @@ from ml_core.utils.logging import seed_everything
 from ml_core.utils import load_yaml_config
 import argparse
 import torch
+import os
+import csv
 import torch.optim as optim
 from ml_core.data import get_dataloaders
 from ml_core.models import MLP
@@ -41,8 +43,26 @@ def main(args):
         device=device,
 	scheduler=scheduler,
     )
-
+    # Make a folder for each seperate seed
     trainer.fit(train_loader, val_loader)
+    out_dir = f"outputs/q4_seed_{seed}"
+    os.makedirs(out_dir, exist_ok=True)
+
+    # Save gradient norms (per step)
+    with open(os.path.join(out_dir, "grad_norms.csv"), "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["step", "grad_norm"])
+        for i, g in enumerate(trainer.grad_norm_history):
+            w.writerow([i, g])
+
+    # Save LR (per epoch)
+    with open(os.path.join(out_dir, "lr_per_epoch.csv"), "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(["epoch", "lr"])
+    for i, lr in enumerate(trainer.lr_history):
+        w.writerow([i + 1, lr])
+
+    print(f"saved Q4 outputs to: {out_dir}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
