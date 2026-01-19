@@ -15,7 +15,7 @@ from ml_core.solver import Trainer
 def main(args):
     # 1. Load Config & Set Seed
     config = load_yaml_config(args.config)
-    seed = int(config.get("seed", 42))
+    seed = int(config.get("seed", 42)) if args.seed is None else int(args.seed)
     seed_everything(seed)
     print(f"Using seed: {seed}")
  
@@ -57,16 +57,23 @@ def main(args):
 
     # Save LR (per epoch)
     with open(os.path.join(out_dir, "lr_per_epoch.csv"), "w", newline="") as f:
-    w = csv.writer(f)
-    w.writerow(["epoch", "lr"])
-    for i, lr in enumerate(trainer.lr_history):
-        w.writerow([i + 1, lr])
+        w = csv.writer(f)
+        w.writerow(["epoch", "lr"])
+        for i, lr in enumerate(trainer.lr_history):
+            w.writerow([i + 1, lr])
 
     print(f"saved Q4 outputs to: {out_dir}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
     parser.add_argument("--config", type=str, required=True, help="Path to config yaml")
-    args = parser.parse_args()
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Override seed from config"
+    )
 
+
+    args = parser.parse_args()
     main(args)
