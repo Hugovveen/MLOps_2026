@@ -1,3 +1,4 @@
+from torch.optim.lr_scheduler import StepLR
 from ml_core.utils.logging import seed_everything
 from ml_core.utils import load_yaml_config
 import argparse
@@ -6,7 +7,6 @@ import torch.optim as optim
 from ml_core.data import get_dataloaders
 from ml_core.models import MLP
 from ml_core.solver import Trainer
-# from ml_core.utils import load_config, seed_everything, setup_logger
 
 # logger = setup_logger("Experiment_Runner")
 
@@ -27,29 +27,22 @@ def main(args):
     optimizer = optim.SGD(model.parameters(),
         lr = config['training']['learning_rate'],)
 
+    scheduler = StepLR(
+        optimizer,
+        step_size=1,
+        gamma=0.9,
+    )
+
+
     trainer = Trainer(
         model=model,
         optimizer=optimizer,
         config=config,
         device=device,
+	scheduler=scheduler,
     )
 
     trainer.fit(train_loader, val_loader)
-    
-    # 2. Setup Device
-    
-    # 3. Data
-    # train_loader, val_loader = get_dataloaders(config)
-    
-    # 4. Model
-    # model = MLP(...)
-    
-    # 5. Optimizer
-    # optimizer = optim.SGD(...)
-    
-    # 6. Trainer & Fit
-    # trainer = Trainer(...)
-    # trainer.fit(...)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
