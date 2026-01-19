@@ -1,4 +1,5 @@
 from typing import Callable, Optional, Tuple
+from pathlib import Path
 
 import h5py
 import numpy as np
