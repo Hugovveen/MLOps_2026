@@ -1,16 +1,12 @@
-# MLOps UvA Bachelor AI Course: Medical Image Classification Skeleton Code
+# MLOps UvA Bachelor AI Course: Medical Image Classification
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
-![Build Status](https://github.com/yourusername/mlops_course/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/Hugovveen/MLOps_2026/actions/workflows/ci.yml)
 ![Code Style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)
 
 A repo exemplifying **MLOps best practices**: modularity, reproducibility, automation, and experiment tracking.
 
 This project implements a standardized workflow for training neural networks on medical data (PCAM/TCGA). 
-
-The idea is that you fill in the repository with the necessary functions so you can execute the ```train.py``` function. Please also fill in this ```README.md``` clearly to setup, install and run your code. 
-
-Don't forget to setup CI and linting!
 
 ---
 
@@ -36,7 +32,8 @@ This project uses the PCAM dataset provided as HDF5 files.
 
 The dataset is not included in this repository.
 
-The data directory is defined via the configuration file under the key: data.data_path 
+The data directory is defined in the YAML config under: data.data_path
+Default in this repo: ./data/camelyonpatch_level_2
 
 All PCAM H5 files must be placed inside this directory.
 
@@ -56,7 +53,7 @@ camelyonpatch_level_2_split_val_x.h5
 camelyonpatch_level_2_split_val_y.h5
 ``` 
 
-Validation is optional. If the validation files are not present, the training pipeline will run without a validation DataLoader.
+Validation is optional. If the validation .h5 files are not present, the loader returns no validation set and training runs without a validation DataLoader.
 
 Example directory layout:
 
@@ -97,23 +94,20 @@ experiments/configs/train_config.yaml
 ``` 
 
 Training command (to be finalized)
-```bash
 TODO exact command used to run experiments/train.py for the best model
 TODO exact configuration file path
 TODO random seed used
-``` 
 
 Expected performance (to be finalized)
-```bash
+
 TODO validation metric and value
 TODO test metric and value
-``` 
 
 Artifacts (to be finalized)
-```bash
+
 TODO path to saved model checkpoint (.pt or .pth)
 TODO path to logs and experiment outputs
-``` 
+
 ---
 
 ## 4. Inference
@@ -129,6 +123,7 @@ TODO document the final checkpoint path used for inference.
 Example usage (to be finalized)
 TODO provide the exact command to run inference once inference.py or the notebook is available.
 TODO include the path to a sample image used for the example.
+
 ---
 
 ## 📂 Project Structure
