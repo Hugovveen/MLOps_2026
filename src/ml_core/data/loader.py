@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, Tuple, Optional
+from typing import Dict, Optional, Tuple
 
 import numpy as np
 from torch.utils.data import DataLoader, WeightedRandomSampler
@@ -22,9 +22,7 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, Optional[DataLoader]]:
     batch_size = data_cfg["batch_size"]
     num_workers = data_cfg.get("num_workers", 0)
 
-
     transform = transforms.ToTensor()
-
 
     x_train = base_path / "camelyonpatch_level_2_split_train_x.h5"
     y_train = base_path / "camelyonpatch_level_2_split_train_y.h5"

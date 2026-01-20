@@ -1,16 +1,18 @@
-from torch.optim.lr_scheduler import StepLR
-from ml_core.utils.logging import seed_everything
-from ml_core.utils import load_yaml_config
 import argparse
-import torch
-import os
 import csv
+import os
+
+import torch
 import torch.optim as optim
 from ml_core.data import get_dataloaders
 from ml_core.models import MLP
 from ml_core.solver import Trainer
+from ml_core.utils import load_yaml_config
+from ml_core.utils.logging import seed_everything
+from torch.optim.lr_scheduler import StepLR
 
 # logger = setup_logger("Experiment_Runner")
+
 
 def main(args):
     # 1. Load Config & Set Seed
@@ -18,16 +20,18 @@ def main(args):
     seed = int(config.get("seed", 42)) if args.seed is None else int(args.seed)
     seed_everything(seed)
     print(f"Using seed: {seed}")
- 
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print (f"using device: {device}")
+    print(f"using device: {device}")
 
     train_loader, val_loader = get_dataloaders(config)
     print("loaded data")
     model = MLP(**config["model"])
 
-    optimizer = optim.SGD(model.parameters(),
-        lr = config['training']['learning_rate'],)
+    optimizer = optim.SGD(
+        model.parameters(),
+        lr=config["training"]["learning_rate"],
+    )
 
     scheduler = StepLR(
         optimizer,
@@ -35,13 +39,12 @@ def main(args):
         gamma=0.9,
     )
 
-
     trainer = Trainer(
         model=model,
         optimizer=optimizer,
         config=config,
         device=device,
-	scheduler=scheduler,
+        scheduler=scheduler,
     )
     # Make a folder for each seperate seed
     trainer.fit(train_loader, val_loader)
@@ -64,16 +67,13 @@ def main(args):
 
     print(f"saved Q4 outputs to: {out_dir}")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
     parser.add_argument("--config", type=str, required=True, help="Path to config yaml")
     parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="Override seed from config"
+        "--seed", type=int, default=None, help="Override seed from config"
     )
-
 
     args = parser.parse_args()
     main(args)
