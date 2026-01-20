@@ -199,11 +199,11 @@ class Trainer:
     	    checkpoint_path = Path("experiments/checkpoints/best.pt")
     	    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
 
-    	    self.save_checkpoint(
-        	path=checkpoint_path,
-        	epoch=epoch,
-        	val_metrics=self.best_val_metrics,
-    	    )
+            self.save_checkpoint(
+                path=checkpoint_path,
+                epoch=epoch,
+                val_metrics=self.best_val_metrics,
+            )
 
             # Scheduler stepping: default to per epoch schedulers
             if self.scheduler is not None:
