@@ -1,0 +1,7 @@
+Job ID: 18465672
+Array task (seed): 0
+Running on node: gcn9.local.snellius.surf.nl
+Start time: Mon Jan 19 13:48:47 CET 2026
+PYTHONPATH=/gpfs/home5/scur2297/mlops-course/MLOps_2026/src:/sw/arch/RHEL8/EB_production/2023/software/Python/3.11.3-GCCcore-12.3.0/easybuild/python
+Using seed: 0
+using device: cuda

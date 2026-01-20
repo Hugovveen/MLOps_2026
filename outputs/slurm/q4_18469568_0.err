@@ -1,0 +1,2 @@
+/var/spool/slurm/slurmd/job18469569/slurm_script: line 41: 4012998 Killed                  python experiments/train.py --config experiments/configs/train_config_q4.yaml --seed ${SEED}
+[2026-01-19T15:03:57.151] error: Detected 1 oom_kill event in StepId=18469569.batch. Some of the step tasks have been OOM Killed.
