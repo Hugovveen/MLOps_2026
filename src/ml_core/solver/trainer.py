@@ -187,23 +187,23 @@ class Trainer:
 
             # Check for best validation loss and save checkpoint
 	if val_loss < best_val_loss:
-    		best_val_loss = val_loss
+            best_val_loss = val_loss
 
-    		self.best_val_metrics = {
-        		"val_loss": val_loss,
-        		"val_accuracy": val_acc,
-        		"val_fbeta": val_fbeta,
-        		"val_pr_auc": val_pr_auc,
-    		}
+            self.best_val_metrics = {
+                "val_loss": val_loss,
+                "val_accuracy": val_acc,
+        	"val_fbeta": val_fbeta,
+        	"val_pr_auc": val_pr_auc,
+    	    }
 
-    		checkpoint_path = Path("experiments/checkpoints/best.pt")
-    		checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    	    checkpoint_path = Path("experiments/checkpoints/best.pt")
+    	    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
 
-    		self.save_checkpoint(
-        		path=checkpoint_path,
-        		epoch=epoch,
-        		val_metrics=self.best_val_metrics,
-    		)
+    	    self.save_checkpoint(
+        	path=checkpoint_path,
+        	epoch=epoch,
+        	val_metrics=self.best_val_metrics,
+    	    )
 
             # Scheduler stepping: default to per epoch schedulers
             if self.scheduler is not None:
