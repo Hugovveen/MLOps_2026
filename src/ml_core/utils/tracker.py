@@ -40,3 +40,34 @@ class ExperimentTracker:
 
     def close(self):
         self.csv_file.close()
+
+import wandb
+from typing import Optional
+
+
+class WandBTracker:
+    def __init__(
+        self,
+        project: str,
+        config: Dict[str, Any],
+        run_name: Optional[str] = None,
+    ):
+        self.run = wandb.init(
+            project=project,
+            config=config,
+            name=run_name,
+        )
+
+    def log_metrics(self, metrics: Dict[str, float], step: Optional[int] = None):
+        wandb.log(metrics, step=step)
+
+    def log_checkpoint(self, path: str | Path):
+        artifact = wandb.Artifact(
+            name="model-checkpoint",
+            type="model",
+        )
+        artifact.add_file(str(path))
+        wandb.log_artifact(artifact)
+
+    def finish(self):
+        wandb.finish()

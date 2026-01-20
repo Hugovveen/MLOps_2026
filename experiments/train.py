@@ -11,6 +11,7 @@ from ml_core.models import MLP
 from ml_core.solver import Trainer
 from ml_core.utils import load_yaml_config
 from ml_core.utils.logging import seed_everything
+from ml_core.utils.tracker import WandBTracker
 
 # logger = setup_logger("Experiment_Runner")
 
@@ -22,9 +23,30 @@ def main(args):
     seed_everything(seed)
     print(f"Using seed: {seed}")
 
+    tracker = WandBTracker(
+    	project="mlops-assignment-2",
+        config={
+            **config,
+            "seed": seed,
+            "device": device,
+    },
+    run_name=f"seed-{seed}",
+
+    )
+
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"using device: {device}")
 
+    tracker = WandBTracker(
+        project="mlops-assignment-2",
+        config={
+            **config,
+            "seed": seed,
+            "device": device,
+        },
+        run_name=f"seed-{seed}",
+    )
     train_loader, val_loader = get_dataloaders(config)
     print("loaded data")
     model = MLP(**config["model"])
@@ -49,6 +71,21 @@ def main(args):
     )
     # Make a folder for each seperate seed
     trainer.fit(train_loader, val_loader)
+    # Log best validation metrics to W&B
+    if trainer.best_val_metrics is not None:
+        tracker.log_metrics(trainer.best_val_metrics)
+
+    # Log best checkpoint
+    tracker.log_checkpoint("experiments/checkpoints/best.pt")
+    tracker.finish()
+
+    # Log final / best validation metrics
+
+
+    tracker.log_metrics(
+        trainer.best_val_metrics
+    )
+
     out_dir = f"outputs/q4_seed_{seed}"
     os.makedirs(out_dir, exist_ok=True)
 
