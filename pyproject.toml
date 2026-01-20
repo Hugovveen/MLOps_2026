@@ -12,6 +12,7 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy",
     "h5py",
+    "wandb",
     "matplotlib",
     "seaborn",
     "pandas",
@@ -27,6 +28,7 @@ dependencies = [
     "pytest",
     "ruff",
     "pre-commit",
+    "scikit-learn",
 ]
 
 # --- TOOL CONFIGURATION ---
