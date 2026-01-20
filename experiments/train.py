@@ -4,12 +4,13 @@ import os
 
 import torch
 import torch.optim as optim
+from torch.optim.lr_scheduler import StepLR
+
 from ml_core.data import get_dataloaders
 from ml_core.models import MLP
 from ml_core.solver import Trainer
 from ml_core.utils import load_yaml_config
 from ml_core.utils.logging import seed_everything
-from torch.optim.lr_scheduler import StepLR
 
 # logger = setup_logger("Experiment_Runner")
 

@@ -2,8 +2,11 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
+
+from ml_core.utils.metrics import compute_fbeta, compute_pr_auc
 
 
 class Trainer:
