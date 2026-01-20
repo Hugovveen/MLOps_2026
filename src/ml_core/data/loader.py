@@ -28,14 +28,14 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, Optional[DataLoader]]:
 
     x_train = base_path / "camelyonpatch_level_2_split_train_x.h5"
     y_train = base_path / "camelyonpatch_level_2_split_train_y.h5"
-
+    print("paths are ok")
     train_dataset = PCAMDataset(
         x_path=str(x_train),
         y_path=str(y_train),
         transform=transform,
         filter_data=True,
     )
-
+    print("pcam initialized")
     labels = [train_dataset[i][1].item() for i in range(len(train_dataset))]
     class_counts = np.bincount(labels)
     class_weights = 1.0 / class_counts
@@ -46,14 +46,14 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, Optional[DataLoader]]:
         num_samples=len(sample_weights),
         replacement=True,
     )
-
+    print("weighted sampler init")
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         sampler=sampler,
         num_workers=num_workers,
     )
-
+    print("data loader initted")
     x_val = base_path / "camelyonpatch_level_2_split_val_x.h5"
     y_val = base_path / "camelyonpatch_level_2_split_val_y.h5"
 

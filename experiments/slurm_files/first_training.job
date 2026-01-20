@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Set job requirements. For thin_course jobs you can use 16 cores
+# on a single node. We set the time limit to 1 hour, which Slurm
+# uses for scheduling. A shorter time results in less queueing,
+# but Slurm will terminate your job once this time is reached.
+
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --gpus 1
+#SBATCH --mem 16G
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=gpu_course
+#SBATCH --time=00:20:00
+#SBATCH --output=array_%A_%a.out
+#SBATCH --error=array_%A_%a.err
+
+# Activate environment
+source ../../my_venv/bin/activate
+
+# Execute program located in $HOME, using the environment
+# This program might write the pre-processed data to the output dir
+python ./experiments/train.py --config ./experiments/configs/train_config_q4.yaml
+

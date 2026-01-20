@@ -23,7 +23,7 @@ def main(args):
     print (f"using device: {device}")
 
     train_loader, val_loader = get_dataloaders(config)
-
+    print("loaded data")
     model = MLP(**config["model"])
 
     optimizer = optim.SGD(model.parameters(),
