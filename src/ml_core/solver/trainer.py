@@ -6,8 +6,10 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from ml_core.utils.metrics import compute_fbeta, compute_pr_auc
+# from ml_core.utils.metrics import compute_fbeta, compute_pr_auc
+from ml_core.metrics import compute_fbeta, compute_pr_auc
 
+from pathlib import Path
 
 class Trainer:
     def __init__(
@@ -134,8 +136,29 @@ class Trainer:
 
         fbeta = compute_fbeta(y_true, y_pred, beta=1.5)
         pr_auc = compute_pr_auc(y_true, y_prob)
-
         return avg_loss, acc, fbeta, pr_auc
+
+    def save_checkpoint(
+        self,
+        path: Path,
+        epoch: int,
+        val_metrics: dict,
+    ):
+        checkpoint = {
+                "epoch": epoch,
+                "model_state_dict": self.model.state_dict(),
+                "optimizer_state_dict": self.optimizer.state_dict(),
+                "val_metrics": val_metrics,
+        }
+        torch.save(checkpoint, path)
+    def load_checkpoint(self, path: Path):
+        checkpoint = torch.load(path, map_location=self.device)
+
+        self.model.load_state_dict(checkpoint["model_state_dict"])
+        self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+
+        return checkpoint
+
 
     def fit(self, train_loader: DataLoader, val_loader: Optional[DataLoader]) -> None:
         epochs = int(self.config["training"]["epochs"])
