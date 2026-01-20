@@ -118,18 +118,26 @@ TODO
 ---
 
 ## 4. Inference
-This section describes how to run a single prediction using a trained model checkpoint.
 
-Inference entrypoint (to be finalized)
-TODO add a dedicated inference.py or a notebook that loads the selected best checkpoint and runs a prediction on a single sample image.
+Inference is performed using a trained model checkpoint.
 
-Model checkpoint (to be finalized)
-TODO add the selected best model checkpoint file (.pt or .pth) to the repository.
-TODO document the final checkpoint path used for inference.
+#### Inference entrypoint
 
-Example ousage (to be finalized)
-TODO provide the exact command to run inference once inference.py or the notebook is available.
-TODO include the path to a sample image used for the example.
+TODO
+- Add an inference entrypoint (script or notebook).
+
+#### Model checkpoint 
+
+TODO
+- Document the path to the trained model checkpoint used for inference.
+- Confirm the checkpoint file format (e.g. .pt or .pth).
+
+#### Example usage
+
+TODO
+- Provide the exact command to run inference.
+- Document the required input format for a single sample.
+- Add the path to a sample input used for the example.
 
 ---
 
