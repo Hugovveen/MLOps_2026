@@ -196,8 +196,8 @@ class Trainer:
         	"val_pr_auc": val_pr_auc,
     	    }
 
-    	    checkpoint_path = Path("experiments/checkpoints/best.pt")
-    	    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+            checkpoint_path = Path("experiments/checkpoints/best.pt")
+            checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
 
             self.save_checkpoint(
                 path=checkpoint_path,
