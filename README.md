@@ -31,44 +31,36 @@ pip install -e .
 This repository does not include the dataset itself.
 To run the project, the dataset must be placed at the path specified in the configuration file, or the configuration must be updated accordingly.
 
+
 The dataset configuration is defined in:
 
+```text
 experiments/configs/train_config.yaml
 ``` 
 
-This repository does not include the dataset itself.
-To run the project, the dataset must be placed at the path specified in the configuration file, or the configuration must be updated accordingly.
-
-#Default dataset settings
+#### Default dataset settings
 
 The following values are the default configuration used in this project.
 They can be modified by editing the YAML configuration file.
 
-```bash
+```yaml
 dataset_type: pcam
-
 data_path: ./data/camelyonpatch_level_2
-
 input_shape: [3, 96, 96]
-
 batch_size: 32
-
 num_workers: 2
 ``` 
 
 These defaults define how the dataset is expected to be loaded and processed when running the training script with the provided configuration.
 
-#Required dataset files
+#### Required dataset files
 
 The exact required dataset files and file format depend on the dataloader implementation.
 
 TODO:
-
-Confirm the exact dataset file format used by the dataloader (e.g. HDF5).
-
-Confirm the required train, validation, and test split files.
-
-Document the dataset source and download procedure used in this project (Q1–Q2). 
+- Confirm the exact dataset file format used by the dataloader (e.g. HDF5).
+- Confirm the required train, validation, and test split files.
+- Document the dataset source and download procedure used in this project (Q1–Q2). 
 
 ---
 
@@ -76,32 +68,52 @@ Document the dataset source and download procedure used in this project (Q1–Q2
 
 Training is performed using the script:
 
-```bash
+```text
 experiments/train.py
 ``` 
 
 The training pipeline is configured via a YAML configuration file.
 
-Configuration template:
-
-```bash
+```text
 experiments/configs/train_config.yaml
 ``` 
 
-Training command (to be finalized)
-TODO exact command used to run experiments/train.py for the best model
-TODO exact configuration file path
-TODO random seed used
+Run command:
 
-Expected performance (to be finalized)
+```bash
+python experiments/train.py --config experiments/configs/train_config.yaml
+``` 
 
-TODO validation metric and value
-TODO test metric and value
+TODO
+- Confirm the exact command used for the final training run
+- Confirm whether additional command-line arguments are used
 
-Artifacts (to be finalized)
+#### Default training settings
 
-TODO path to saved model checkpoint (.pt or .pth)
-TODO path to logs and experiment outputs
+```yaml
+seed: 42
+training:
+  epochs: 5
+  learning_rate: 0.001
+  save_dir: ./experiments/results
+``` 
+
+TODO
+- Confirm whether these defaults are used for the final run
+- Document any configuration overrides
+
+#### Artifacts
+
+Default output directory:
+
+```text
+./experiments/results
+``` 
+
+TODO
+- Document which artifacts are stored in this directory
+- Document the exact checkpoint file path
+- Document logging and metrics outputs
 
 ---
 
@@ -115,7 +127,7 @@ Model checkpoint (to be finalized)
 TODO add the selected best model checkpoint file (.pt or .pth) to the repository.
 TODO document the final checkpoint path used for inference.
 
-Example usage (to be finalized)
+Example ousage (to be finalized)
 TODO provide the exact command to run inference once inference.py or the notebook is available.
 TODO include the path to a sample image used for the example.
 
