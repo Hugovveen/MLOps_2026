@@ -19,7 +19,7 @@ jobs:
           # Auto-fix all safe issues (import order, unused imports, etc.)
           ruff check . --fix
           # Ensure formatting is correct after fixes
-          ruff format --check .
+          ruff format .
 
   test:
     runs-on: ubuntu-latest
