@@ -28,52 +28,47 @@ pip install -e .
 
 ## 2. Data Setup
 
-This project uses the PCAM dataset provided as HDF5 files.
+This repository does not include the dataset itself.
+To run the project, the dataset must be placed at the path specified in the configuration file, or the configuration must be updated accordingly.
 
-The dataset is not included in this repository.
+The dataset configuration is defined in:
 
-The data directory is defined in the YAML config under: data.data_path
-Default in this repo: ./data/camelyonpatch_level_2
-
-All PCAM H5 files must be placed inside this directory.
-
-Required files for training:
-
-```bash
-camelyonpatch_level_2_split_train_x.h5
-
-camelyonpatch_level_2_split_train_y.h5
+experiments/configs/train_config.yaml
 ``` 
 
-Optional validation files:
+This repository does not include the dataset itself.
+To run the project, the dataset must be placed at the path specified in the configuration file, or the configuration must be updated accordingly.
+
+#Default dataset settings
+
+The following values are the default configuration used in this project.
+They can be modified by editing the YAML configuration file.
 
 ```bash
-camelyonpatch_level_2_split_val_x.h5
+dataset_type: pcam
 
-camelyonpatch_level_2_split_val_y.h5
+data_path: ./data/camelyonpatch_level_2
+
+input_shape: [3, 96, 96]
+
+batch_size: 32
+
+num_workers: 2
 ``` 
 
-Validation is optional. If the validation .h5 files are not present, the loader returns no validation set and training runs without a validation DataLoader.
+These defaults define how the dataset is expected to be loaded and processed when running the training script with the provided configuration.
 
-Example directory layout:
+#Required dataset files
 
-```bash
-<DATA_PATH>/
-camelyonpatch_level_2_split_train_x.h5
-camelyonpatch_level_2_split_train_y.h5
-camelyonpatch_level_2_split_val_x.h5
-camelyonpatch_level_2_split_val_y.h5
-``` 
-
-Ensure that the directory structure matches exactly, as the dataset loader expects this layout
+The exact required dataset files and file format depend on the dataloader implementation.
 
 TODO:
 
-Add test H5 files to this section if test evaluation is implemented later.
+Confirm the exact dataset file format used by the dataloader (e.g. HDF5).
 
-Update this section if the data_path configuration key or default value changes.
+Confirm the required train, validation, and test split files.
 
-Verify and document the exact dataset location used for the final training run.
+Document the dataset source and download procedure used in this project (Q1–Q2). 
 
 ---
 
