@@ -1,0 +1,80 @@
+_wandb:
+    value:
+        cli_version: 0.24.0
+        e:
+            01589hjio3a539agfxqyk3jjr7djxz5c:
+                args:
+                    - --config
+                    - experiments/configs/train_config.yaml
+                    - --seed
+                    - "42"
+                codePath: experiments/train.py
+                codePathLocal: experiments/train.py
+                cpu_count: 48
+                cpu_count_logical: 96
+                disk:
+                    /:
+                        total: "107307073536"
+                        used: "9825914880"
+                email: arjanvstav@gmail.com
+                executable: /gpfs/home3/scur2377/MLOps_2026/.venv/bin/python
+                git:
+                    commit: 39cd7d48143692a9d011b6465de6e20a4b08648f
+                    remote: git@github.com:Hugovveen/MLOps_2026.git
+                host: int6.local.snellius.surf.nl
+                memory:
+                    total: "269550755840"
+                os: Linux-5.14.0-570.76.1.el9_6.x86_64-x86_64-with-glibc2.34
+                program: /gpfs/home3/scur2377/MLOps_2026/experiments/train.py
+                python: CPython 3.13.1
+                root: /gpfs/home3/scur2377/MLOps_2026
+                startedAt: "2026-01-20T21:11:51.147523Z"
+                writerId: 01589hjio3a539agfxqyk3jjr7djxz5c
+        m: []
+        python_version: 3.13.1
+        t:
+            "1":
+                - 1
+                - 5
+                - 41
+                - 53
+            "2":
+                - 1
+                - 5
+                - 41
+                - 53
+            "3":
+                - 13
+                - 16
+            "4": 3.13.1
+            "5": 0.24.0
+            "12": 0.24.0
+            "13": linux-x86_64
+data:
+    value:
+        batch_size: 32
+        data_path: ./data/camelyonpatch_level_2
+        dataset_type: pcam
+        input_shape:
+            - 3
+            - 96
+            - 96
+        num_workers: 2
+device:
+    value: cpu
+experiment_name:
+    value: pcam_mlp_baseline
+model:
+    value:
+        dropout_rate: 0.2
+        hidden_units:
+            - 64
+            - 32
+        num_classes: 2
+seed:
+    value: 42
+training:
+    value:
+        epochs: 5
+        learning_rate: 0.001
+        save_dir: ./experiments/results

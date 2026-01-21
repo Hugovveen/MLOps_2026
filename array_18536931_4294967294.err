@@ -1,0 +1,5 @@
+/var/spool/slurm/slurmd/job18536931/slurm_script: line 19: ../../my_venv/bin/activate: No such file or directory
+Traceback (most recent call last):
+  File "/gpfs/home3/scur2377/MLOps_2026/./experiments/train.py", line 5, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'

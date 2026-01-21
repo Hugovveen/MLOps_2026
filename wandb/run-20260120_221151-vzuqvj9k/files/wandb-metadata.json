@@ -1,0 +1,34 @@
+{
+  "os": "Linux-5.14.0-570.76.1.el9_6.x86_64-x86_64-with-glibc2.34",
+  "python": "CPython 3.13.1",
+  "startedAt": "2026-01-20T21:11:51.147523Z",
+  "args": [
+    "--config",
+    "experiments/configs/train_config.yaml",
+    "--seed",
+    "42"
+  ],
+  "program": "/gpfs/home3/scur2377/MLOps_2026/experiments/train.py",
+  "codePath": "experiments/train.py",
+  "codePathLocal": "experiments/train.py",
+  "git": {
+    "remote": "git@github.com:Hugovveen/MLOps_2026.git",
+    "commit": "39cd7d48143692a9d011b6465de6e20a4b08648f"
+  },
+  "email": "arjanvstav@gmail.com",
+  "root": "/gpfs/home3/scur2377/MLOps_2026",
+  "host": "int6.local.snellius.surf.nl",
+  "executable": "/gpfs/home3/scur2377/MLOps_2026/.venv/bin/python",
+  "cpu_count": 48,
+  "cpu_count_logical": 96,
+  "disk": {
+    "/": {
+      "total": "107307073536",
+      "used": "9825914880"
+    }
+  },
+  "memory": {
+    "total": "269550755840"
+  },
+  "writerId": "01589hjio3a539agfxqyk3jjr7djxz5c"
+}

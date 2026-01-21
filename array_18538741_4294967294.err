@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/gpfs/home3/scur2377/MLOps_2026/./experiments/train.py", line 33, in <module>
+    from ml_core.utils import load_yaml_config
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/utils/__init__.py", line 3, in <module>
+    from .tracker import ExperimentTracker
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/utils/tracker.py", line 44, in <module>
+    import wandb
+ModuleNotFoundError: No module named 'wandb'

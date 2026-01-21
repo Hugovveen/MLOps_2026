@@ -1,0 +1,7 @@
+/var/spool/slurm/slurmd/job18539571/slurm_script: line 19: ../../my_venv/bin/activate: No such file or directory
+Traceback (most recent call last):
+  File "/gpfs/home3/scur2377/MLOps_2026/./experiments/train.py", line 14, in <module>
+    assert_in_venv()
+  File "/gpfs/home3/scur2377/MLOps_2026/./experiments/train.py", line 9, in assert_in_venv
+    raise RuntimeError(
+RuntimeError: Not running inside a virtual environment. Activate the correct venv before running this script.

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/gpfs/home3/scur2377/MLOps_2026/./experiments/train.py", line 32, in <module>
+    from ml_core.solver import Trainer
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/solver/__init__.py", line 1, in <module>
+    from .trainer import Trainer
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/solver/trainer.py", line 10, in <module>
+    from ml_core.metrics import compute_fbeta, compute_pr_auc
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/metrics/__init__.py", line 1, in <module>
+    from .classification import compute_fbeta, compute_pr_auc
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/metrics/classification.py", line 1, in <module>
+    from sklearn.metrics import average_precision_score, fbeta_score
+ModuleNotFoundError: No module named 'sklearn'

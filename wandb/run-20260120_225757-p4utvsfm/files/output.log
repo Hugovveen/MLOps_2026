@@ -1,0 +1,25 @@
+paths are ok
+Traceback (most recent call last):
+  File "/gpfs/home3/scur2377/MLOps_2026/experiments/train.py", line 94, in <module>
+    main(args)
+    ~~~~^^^^^^
+  File "/gpfs/home3/scur2377/MLOps_2026/experiments/train.py", line 40, in main
+    train_loader, val_loader = get_dataloaders(config)
+                               ~~~~~~~~~~~~~~~^^^^^^^^
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/data/loader.py", line 30, in get_dataloaders
+    train_dataset = PCAMDataset(
+        x_path=str(x_train),
+    ...<2 lines>...
+        filter_data=True,
+    )
+  File "/gpfs/home3/scur2377/MLOps_2026/src/ml_core/data/pcam.py", line 17, in __init__
+    self.x_data = h5py.File(x_path, "r")["x"]
+                  ~~~~~~~~~^^^^^^^^^^^^^
+  File "/gpfs/home3/scur2377/MLOps_2026/.venv/lib/python3.13/site-packages/h5py/_hl/files.py", line 566, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/gpfs/home3/scur2377/MLOps_2026/.venv/lib/python3.13/site-packages/h5py/_hl/files.py", line 241, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 104, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to synchronously open file (unable to open file: name = '../data/pcam/camelyonpatch_level_2_split_train_x.h5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)

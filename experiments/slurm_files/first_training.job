@@ -21,4 +21,3 @@ source ../../my_venv/bin/activate
 # Execute program located in $HOME, using the environment
 # This program might write the pre-processed data to the output dir
 python ./experiments/train.py --config ./experiments/configs/train_config_q4.yaml
-
