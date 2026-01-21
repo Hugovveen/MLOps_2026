@@ -19,8 +19,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # 2. Upgrade pip
-pip install --upgrade pip
-
+pip install --upgrade pip         
 # 3. Install the project and dependencies
 pip install -e .
 ``` 
@@ -54,13 +53,14 @@ num_workers: 2
 These defaults define how the dataset is expected to be loaded and processed when running the training script with the provided configuration.
 
 #### Required dataset files
-
-The exact required dataset files and file format depend on the dataloader implementation.
-
-TODO:
-- Confirm the exact dataset file format used by the dataloader (e.g. HDF5).
-- Confirm the required train, validation, and test split files.
-- Document the dataset source and download procedure used in this project (Q1–Q2). 
+- The used dataset file format was HDF5
+- Required train, validation and test split files:
+    camelyonpatch_level_2_split_train_x.h5
+    camelyonpatch_level_2_split_train_y.h5
+    camelyonpatch_level_2_split_valid_x.h5
+    camelyonpatch_level_2_split_valid_y.h5
+- Dataset source: https://surfdrive.surf.nl/s/wjRYtSborgbPF2P
+- Download to snellius with scp
 
 ---
 
@@ -82,11 +82,7 @@ Run command:
 
 ```bash
 python experiments/train.py --config experiments/configs/train_config.yaml
-``` 
-
-TODO
-- Confirm the exact command used for the final training run
-- Confirm whether additional command-line arguments are used
+```
 
 #### Default training settings
 
@@ -96,11 +92,7 @@ training:
   epochs: 5
   learning_rate: 0.001
   save_dir: ./experiments/results
-``` 
-
-TODO
-- Confirm whether these defaults are used for the final run
-- Document any configuration overrides
+```
 
 #### Artifacts
 
@@ -108,37 +100,7 @@ Default output directory:
 
 ```text
 ./experiments/results
-``` 
-
-TODO
-- Document which artifacts are stored in this directory
-- Document the exact checkpoint file path
-- Document logging and metrics outputs
-
----
-
-## 4. Inference
-
-Inference is performed using a trained model checkpoint.
-
-#### Inference entrypoint
-
-TODO
-- Add an inference entrypoint (script or notebook).
-
-#### Model checkpoint 
-
-TODO
-- Document the path to the trained model checkpoint used for inference.
-- Confirm the checkpoint file format (e.g. .pt or .pth).
-
-#### Example usage
-
-TODO
-- Provide the exact command to run inference.
-- Document the required input format for a single sample.
-- Add the path to a sample input used for the example.
-
+```
 ---
 
 ## 📂 Project Structure
