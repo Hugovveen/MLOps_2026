@@ -161,61 +161,62 @@ class Trainer:
 
 
     def fit(self, train_loader: DataLoader, val_loader: Optional[DataLoader]) -> None:
-    epochs = int(self.config["training"]["epochs"])
-    print(f"Starting training for {epochs} epochs...")
+        epochs = int(self.config["training"]["epochs"])
+        print(f"Starting training for {epochs} epochs...")
 
-    best_val_loss = float("inf")
-    self.best_val_metrics = None
+        best_val_loss = float("inf")
+        self.best_val_metrics = None
 
-    # Epoch loop
-    for epoch in range(epochs):
-        # Log LR once per epoch
-        current_lr = self._current_lr()
-        self.lr_history.append(current_lr)
-        print(f"[LR] epoch={epoch+1} lr={current_lr}")
+        # Epoch loop
+        for epoch in range(epochs):
+            # Log LR once per epoch
+            current_lr = self._current_lr()
+            self.lr_history.append(current_lr)
+            print(f"[LR] epoch={epoch+1} lr={current_lr}")
 
-        # TRAIN 
-        train_loss, train_acc, _ = self.train_epoch(train_loader, epoch)
+            # TRAIN
+            train_loss, train_acc, _ = self.train_epoch(train_loader, epoch)
 
-        # VALIDATE
-        if val_loader is not None:
-            val_loss, val_acc, val_fbeta, val_pr_auc = self.validate(val_loader, epoch)
-        else:
-            val_loss, val_acc, val_fbeta, val_pr_auc = (0.0, 0.0, 0.0, 0.0)
-
-        print(
-            f"--- Epoch {epoch+1} Summary: "
-            f"Train Loss {train_loss:.4f}, Train Acc {train_acc:.4f} | "
-            f"Val Loss {val_loss:.4f}, Val Acc {val_acc:.4f}, "
-            f"Val Fβ {val_fbeta:.4f}, Val PR-AUC {val_pr_auc:.4f} ---"
-        )
-
-        # CHECKPOINTING 
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
-
-            self.best_val_metrics = {
-                "val_loss": val_loss,
-                "val_accuracy": val_acc,
-                "val_fbeta": val_fbeta,
-                "val_pr_auc": val_pr_auc,
-            }
-
-            checkpoint_path = Path("experiments/checkpoints/best.pt")
-            checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-
-            self.save_checkpoint(
-                path=checkpoint_path,
-                epoch=epoch + 1,
-                val_metrics=self.best_val_metrics,
-            )
+            # VALIDATE
+            if val_loader is not None:
+                val_loss, val_acc, val_fbeta, val_pr_auc = self.validate(val_loader, epoch)
+            else:
+                val_loss, val_acc, val_fbeta, val_pr_auc = (0.0, 0.0, 0.0, 0.0)
 
             print(
-                f"[Checkpoint] Saved best checkpoint to {checkpoint_path} "
-                f"(val_loss={val_loss:.4f})"
+                f"--- Epoch {epoch+1} Summary: "
+                f"Train Loss {train_loss:.4f}, Train Acc {train_acc:.4f} | "
+                f"Val Loss {val_loss:.4f}, Val Acc {val_acc:.4f}, "
+                f"Val Fβ {val_fbeta:.4f}, Val PR-AUC {val_pr_auc:.4f} ---"
             )
 
-        # SCHEDULER STEP
-        if self.scheduler is not None:
-            self.scheduler.step()
+            # CHECKPOINTING
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+
+                self.best_val_metrics = {
+                    "val_loss": val_loss,
+                    "val_accuracy": val_acc,
+                    "val_fbeta": val_fbeta,
+                    "val_pr_auc": val_pr_auc,
+                }
+
+                checkpoint_path = Path("experiments/checkpoints/best.pt")
+                checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+
+                self.save_checkpoint(
+                    path=checkpoint_path,
+                    epoch=epoch + 1,
+                    val_metrics=self.best_val_metrics,
+                )
+
+                print(
+                    f"[Checkpoint] Saved best checkpoint to {checkpoint_path} "
+                    f"(val_loss={val_loss:.4f})"
+                )
+
+            # SCHEDULER STEP
+            if self.scheduler is not None:
+                self.scheduler.step()
+
 
